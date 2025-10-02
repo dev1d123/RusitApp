@@ -33,6 +33,18 @@ export default function BisectionPage() {
   const [root, setRoot] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // NUEVO: controles de decimales y modo
+  const [digits, setDigits] = useState<number>(6);
+  const [roundMode, setRoundMode] = useState<'approx' | 'trunc'>('approx');
+
+  // NUEVO: util de redondeo/ truncamiento y formateo
+  function roundTo(x: number, d: number, mode: 'approx' | 'trunc') {
+    if (!Number.isFinite(x)) return x;
+    const factor = Math.pow(10, Math.max(0, d | 0));
+    return mode === 'approx' ? Math.round(x * factor) / factor : Math.trunc(x * factor) / factor;
+  }
+  const fmt = (x: number) => roundTo(x, digits, roundMode);
+
   const f = useMemo(() => {
     try {
       setError(null);
@@ -159,6 +171,34 @@ export default function BisectionPage() {
             className="w-full border rounded px-3 py-2 text-sm"
           />
         </div>
+
+        {/* NUEVO: Decimales */}
+        <div>
+          <label className="block text-sm font-medium">Decimales</label>
+          <input
+            type="number"
+            min={0}
+            max={15}
+            step={1}
+            value={digits}
+            onChange={(e) => setDigits(Math.max(0, Number(e.target.value) | 0))}
+            className="w-full border rounded px-3 py-2 text-sm"
+          />
+        </div>
+
+        {/* NUEVO: Modo */}
+        <div>
+          <label className="block text-sm font-medium">Modo</label>
+          <select
+            value={roundMode}
+            onChange={(e) => setRoundMode(e.target.value as 'approx' | 'trunc')}
+            className="w-full border rounded px-3 py-2 text-sm"
+          >
+            <option value="approx">Aproximación</option>
+            <option value="trunc">Truncamiento</option>
+          </select>
+        </div>
+
         <div className="sm:col-span-2 lg:col-span-3">
           <button onClick={run} className="px-4 py-2 bg-black text-white rounded text-sm">
             Calcular
@@ -170,7 +210,7 @@ export default function BisectionPage() {
 
       {root !== null && !error && (
         <div className="text-sm">
-          Raíz aproximada: <span className="font-mono">{root}</span>
+          Raíz aproximada: <span className="font-mono">{fmt(root)}</span>
         </div>
       )}
 
@@ -193,13 +233,13 @@ export default function BisectionPage() {
               {rows.map((r) => (
                 <tr key={r.i} className="odd:bg-white even:bg-gray-50">
                   <td className="p-2 border text-center">{r.i}</td>
-                  <td className="p-2 border font-mono">{r.a}</td>
-                  <td className="p-2 border font-mono">{r.b}</td>
-                  <td className="p-2 border font-mono">{r.m}</td>
-                  <td className="p-2 border font-mono">{r.fa}</td>
-                  <td className="p-2 border font-mono">{r.fb}</td>
-                  <td className="p-2 border font-mono">{r.fm}</td>
-                  <td className="p-2 border font-mono">{r.err}</td>
+                  <td className="p-2 border font-mono">{fmt(r.a)}</td>
+                  <td className="p-2 border font-mono">{fmt(r.b)}</td>
+                  <td className="p-2 border font-mono">{fmt(r.m)}</td>
+                  <td className="p-2 border font-mono">{fmt(r.fa)}</td>
+                  <td className="p-2 border font-mono">{fmt(r.fb)}</td>
+                  <td className="p-2 border font-mono">{fmt(r.fm)}</td>
+                  <td className="p-2 border font-mono">{fmt(r.err)}</td>
                 </tr>
               ))}
             </tbody>
