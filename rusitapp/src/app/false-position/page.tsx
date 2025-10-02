@@ -123,81 +123,92 @@ export default function FalsePositionPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-lg font-semibold">Método de Regla Falsa</h2>
+    <div className="space-y-8">
+      <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-indigo-700 to-fuchsia-700 bg-clip-text text-transparent">
+        Método de Regla Falsa
+      </h2>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="sm:col-span-2 lg:col-span-3">
-          <FunctionInput value={expr} onChange={setExpr} />
-        </div>
-        <div>
-          <label className="block text-sm font-medium">a</label>
-          <input type="number" value={a} onChange={(e) => setA(Number(e.target.value))} className="w-full border rounded px-3 py-2 text-sm" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium">b</label>
-          <input type="number" value={b} onChange={(e) => setB(Number(e.target.value))} className="w-full border rounded px-3 py-2 text-sm" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium">Tolerancia</label>
-          <input type="number" step="any" value={tol} onChange={(e) => setTol(Number(e.target.value))} className="w-full border rounded px-3 py-2 text-sm" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium">Iteraciones máx</label>
-          <input type="number" value={maxIter} onChange={(e) => setMaxIter(Number(e.target.value))} className="w-full border rounded px-3 py-2 text-sm" />
-        </div>
+      <div className="rounded-2xl border border-slate-200/60 bg-gradient-to-br from-white to-slate-50/70 backdrop-blur-md shadow-lg shadow-slate-200/60 p-6 transition-shadow hover:shadow-xl">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="sm:col-span-2 lg:col-span-3">
+            <FunctionInput value={expr} onChange={setExpr} />
+            <p className="mt-2 text-xs text-slate-500">Asegura f(a)·f(b) &lt; 0 para garantizar raíz en [a,b].</p>
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium">Decimales</label>
-          <input type="number" min={0} max={15} step={1} value={digits} onChange={(e) => setDigits(Math.max(0, Number(e.target.value) | 0))} className="w-full border rounded px-3 py-2 text-sm" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium">Modo</label>
-          <select value={roundMode} onChange={(e) => setRoundMode(e.target.value as 'approx' | 'trunc')} className="w-full border rounded px-3 py-2 text-sm">
-            <option value="approx">Aproximación</option>
-            <option value="trunc">Truncamiento</option>
-          </select>
-        </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 mb-1">a</label>
+            <input className="w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm shadow-sm transition hover:border-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40 focus:border-indigo-400" type="number" value={a} onChange={(e) => setA(Number(e.target.value))} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 mb-1">b</label>
+            <input className="w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm shadow-sm transition hover:border-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40 focus:border-indigo-400" type="number" value={b} onChange={(e) => setB(Number(e.target.value))} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 mb-1">Tolerancia</label>
+            <input className="w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm shadow-sm transition hover:border-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40 focus:border-indigo-400" type="number" step="any" value={tol} onChange={(e) => setTol(Number(e.target.value))} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 mb-1">Iteraciones máx</label>
+            <input className="w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm shadow-sm transition hover:border-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40 focus:border-indigo-400" type="number" value={maxIter} onChange={(e) => setMaxIter(Number(e.target.value))} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 mb-1">Decimales</label>
+            <input className="w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm shadow-sm transition hover:border-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40 focus:border-indigo-400" type="number" min={0} max={15} step={1} value={digits} onChange={(e) => setDigits(Math.max(0, Number(e.target.value) | 0))} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 mb-1">Modo</label>
+            <select className="w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm shadow-sm transition hover:border-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40 focus:border-indigo-400" value={roundMode} onChange={(e) => setRoundMode(e.target.value as 'approx' | 'trunc')}>
+              <option value="approx">Aproximación</option>
+              <option value="trunc">Truncamiento</option>
+            </select>
+          </div>
 
-        <div className="sm:col-span-2 lg:col-span-3">
-          <button onClick={run} className="px-4 py-2 bg-black text-white rounded text-sm">Calcular</button>
+          <div className="sm:col-span-2 lg:col-span-3">
+            <button onClick={run} className="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-fuchsia-600 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 active:scale-[0.99]">
+              Calcular <span className="ml-1">🎯</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {error && <div className="text-sm text-red-600">{error}</div>}
+      {error && (
+        <div className="rounded-2xl border border-red-200/60 bg-red-50/80 text-red-700 px-3 py-2 text-sm shadow-sm">
+          {error}
+        </div>
+      )}
 
       {root !== null && !error && (
-        <div className="text-sm">
-          Raíz aproximada: <span className="font-mono">{fmt(root)}</span>
+        <div className="rounded-2xl border border-emerald-200/60 bg-emerald-50/80 text-emerald-700 px-3 py-2 text-sm shadow-sm">
+          Raíz aproximada: <span className="inline-block rounded-md bg-slate-900 text-white font-mono px-2 py-0.5 text-xs ml-1">{fmt(root)}</span>
         </div>
       )}
 
       {rows.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border">
-            <thead className="bg-gray-50">
+        <div className="rounded-2xl border border-slate-200/60 bg-white/90 backdrop-blur-md shadow-lg shadow-slate-200/60 overflow-x-auto p-0">
+          <table className="w-full text-sm">
+            <thead className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-slate-200/70">
               <tr>
-                <th className="p-2 border">i</th>
-                <th className="p-2 border">a</th>
-                <th className="p-2 border">b</th>
-                <th className="p-2 border">xr</th>
-                <th className="p-2 border">f(a)</th>
-                <th className="p-2 border">f(b)</th>
-                <th className="p-2 border">f(xr)</th>
-                <th className="p-2 border">error</th>
+                <th className="p-2 text-left font-semibold text-slate-600">i</th>
+                <th className="p-2 text-left font-semibold text-slate-600">a</th>
+                <th className="p-2 text-left font-semibold text-slate-600">b</th>
+                <th className="p-2 text-left font-semibold text-slate-600">xr</th>
+                <th className="p-2 text-left font-semibold text-slate-600">f(a)</th>
+                <th className="p-2 text-left font-semibold text-slate-600">f(b)</th>
+                <th className="p-2 text-left font-semibold text-slate-600">f(xr)</th>
+                <th className="p-2 text-left font-semibold text-slate-600">error</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.i} className="odd:bg-white even:bg-gray-50">
-                  <td className="p-2 border text-center">{r.i}</td>
-                  <td className="p-2 border font-mono">{fmt(r.a)}</td>
-                  <td className="p-2 border font-mono">{fmt(r.b)}</td>
-                  <td className="p-2 border font-mono">{fmt(r.xr)}</td>
-                  <td className="p-2 border font-mono">{fmt(r.fa)}</td>
-                  <td className="p-2 border font-mono">{fmt(r.fb)}</td>
-                  <td className="p-2 border font-mono">{fmt(r.fxr)}</td>
-                  <td className="p-2 border font-mono">{fmt(r.err)}</td>
+                <tr key={r.i} className="odd:bg-white even:bg-slate-50 hover:bg-indigo-50/40 transition-colors">
+                  <td className="p-2 border-t border-slate-200/70 text-center align-middle">{r.i}</td>
+                  <td className="p-2 border-t border-slate-200/70 font-mono align-middle">{fmt(r.a)}</td>
+                  <td className="p-2 border-t border-slate-200/70 font-mono align-middle">{fmt(r.b)}</td>
+                  <td className="p-2 border-t border-slate-200/70 font-mono align-middle">{fmt(r.xr)}</td>
+                  <td className="p-2 border-t border-slate-200/70 font-mono align-middle">{fmt(r.fa)}</td>
+                  <td className="p-2 border-t border-slate-200/70 font-mono align-middle">{fmt(r.fb)}</td>
+                  <td className="p-2 border-t border-slate-200/70 font-mono align-middle">{fmt(r.fxr)}</td>
+                  <td className="p-2 border-t border-slate-200/70 font-mono align-middle">{fmt(r.err)}</td>
                 </tr>
               ))}
             </tbody>
